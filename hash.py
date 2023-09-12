@@ -75,8 +75,8 @@ except Exception as e:
     print_verbosity(2, e)
     sys.exit(1)
 
-print_verbosity(0, hash, True)
-print_verbosity(1, f"Hash extraido: {hash}")
+print_verbosity(0, HASHSTRING, True)
+print_verbosity(1, f"Hash extraido: {HASHSTRING}")
 
 # Comparación de hashes
 
