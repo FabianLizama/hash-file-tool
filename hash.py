@@ -75,7 +75,7 @@ except OSError:
     sys.exit(1)
 
 print_verbosity(0, HASHSTRING, True)
-print_verbosity(1, f"Hash extraido: {HASHSTRING}")
+print_verbosity(1, f"Hash readed: {HASHSTRING}")
 
 # Comparación de hashes
 
@@ -122,7 +122,7 @@ if args.output:
         print_verbosity(1, "You don't have permission to open the file")
         sys.exit(1)
     except IsADirectoryError:
-        print_verbosity(1, "El archivo es un directorio")
+        print_verbosity(1, "The file is a directory")
         sys.exit(1)
     except OSError:
         print_verbosity(1, "The file is not a text file")
