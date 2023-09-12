@@ -20,7 +20,7 @@ $ cd file-hash-tool
 ```
 ## Uso
 ```console
-$ python hash --help
+$ python hash.py --help
 usage: hash.py [-h] [-a {md5,sha1,sha256,sha512}] [-v {0,1,2}] [-o OUTPUT] [-i INPUT | -H HASH] file
 
 Read the hash of a file and compare it with another hash
