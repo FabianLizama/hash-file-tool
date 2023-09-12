@@ -50,8 +50,8 @@ def print_verbosity(verbosity, message, strict=False):
 try:
     with open(args.file, "rb") as f:
         data = f.read()
-        print_verbosity(2, f"Abriendo archivo: {args.file}")
-        print_verbosity(2, f"Algoritmo: {args.algorithm}")
+        print_verbosity(2, f"Opening file: {args.file}")
+        print_verbosity(2, f"Algorithm: {args.algorithm}")
         if args.algorithm == "md5":
             HASHSTRING = hashlib.md5(data).hexdigest()
         elif args.algorithm == "sha1":
@@ -62,17 +62,16 @@ try:
             HASHSTRING = hashlib.sha512(data).hexdigest()
         f.close()
 except FileNotFoundError:
-    print_verbosity(1, "El archivo no existe")
+    print_verbosity(1, "File does not exist")
     sys.exit(1)
 except PermissionError:
-    print_verbosity(1, "No tienes permisos para abrir el archivo")
+    print_verbosity(1, "You don't have permission to open the file")
     sys.exit(1)
 except IsADirectoryError:
-    print_verbosity(1, "El archivo es un directorio")
+    print_verbosity(1, "The file is a directory")
     sys.exit(1)
-except Exception as e:
-    print_verbosity(1, "Error desconocido")
-    print_verbosity(2, e)
+except OSError:
+    print_verbosity(1, "The file is not a text file")
     sys.exit(1)
 
 print_verbosity(0, HASHSTRING, True)
@@ -82,51 +81,49 @@ print_verbosity(1, f"Hash extraido: {HASHSTRING}")
 
 # Hash introducido por consola
 if args.hash:
-    print_verbosity(1, f"Hash introducido: {args.hash}")
+    print_verbosity(1, f"Input hash: {args.hash}")
     if args.hash.isupper():
         args.hash = args.hash.lower()
     if HASHSTRING == args.hash:
         print_verbosity(0, True, True)
-        print_verbosity(1, "El hash coincide")
+        print_verbosity(1, "The hashes match")
     else:
         print_verbosity(0, False, True)
-        print_verbosity(1, "El hash no coincide")
+        print_verbosity(1, "The hashes don't match")
 
 # Hash introducido por archivo
 if args.input:
-    print_verbosity(1, f"Abriendo archivo: {args.input}")
+    print_verbosity(1, f"Opening file: {args.input}")
     try:
         with open(args.input, "r", encoding="utf-8") as f:
             HASHSTRING = f.read()
             f.close()
     except FileNotFoundError:
-        print_verbosity(1, "El archivo no existe")
+        print_verbosity(1, "The file does not exist")
         sys.exit(1)
     except PermissionError:
-        print_verbosity(1, "No tienes permisos para abrir el archivo")
+        print_verbosity(1, "You don't have permission to open the file")
         sys.exit(1)
     except IsADirectoryError:
-        print_verbosity(1, "El archivo es un directorio")
+        print_verbosity(1, "The file is a directory")
         sys.exit(1)
-    except Exception as e:
-        print_verbosity(1, "Error desconocido")
-        print_verbosity(2, e)
+    except OSError:
+        print_verbosity(1, "The file is not a text file")
         sys.exit(1)
 
 # Output del hash extraido
 if args.output:
-    print_verbosity(1, f"Guardando hash en {args.output}")
+    print_verbosity(1, f"Saving hash in: {args.output}")
     try:
         with open(args.output, "w", encoding="utf-8") as f:
             f.write(HASHSTRING)
             f.close()
     except PermissionError:
-        print_verbosity(1, "No tienes permisos para abrir o crear el archivo")
+        print_verbosity(1, "You don't have permission to open the file")
         sys.exit(1)
     except IsADirectoryError:
         print_verbosity(1, "El archivo es un directorio")
         sys.exit(1)
-    except Exception as e:
-        print_verbosity(1, "Error desconocido")
-        print_verbosity(2, e)
+    except OSError:
+        print_verbosity(1, "The file is not a text file")
         sys.exit(1)
